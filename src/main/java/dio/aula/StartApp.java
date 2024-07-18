@@ -1,15 +1,19 @@
 package dio.aula;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
-import dio.aula.model.User;
+import dio.aula.model.User; // Adicione esta importação
 import dio.aula.repository.UserRepository;
 
+@Component // Anote a classe como um componente Spring
 public class StartApp implements CommandLineRunner {
 
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
+
+    public StartApp(UserRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public void run(String... args) throws Exception {
@@ -19,9 +23,8 @@ public class StartApp implements CommandLineRunner {
         user.setPassword("dio123");
         repository.save(user);
 
-        for(User u: repository.findAll()){
+        for (User u : repository.findAll()) {
             System.out.println(u);
         }
     }
-
 }
